@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
+import tensorflow as tf
 import keras
 from .. import backend
 from ..utils import anchors as utils_anchors
@@ -67,7 +67,7 @@ class Anchors(keras.layers.Layer):
             anchors = backend.shift(features_shape[2:4], self.stride, self.anchors)
         else:
             anchors = backend.shift(features_shape[1:3], self.stride, self.anchors)
-        anchors = keras.backend.tile(keras.backend.expand_dims(anchors, axis=0), (features_shape[0], 1, 1))
+        anchors = tf.keras.backend.tile(tf.keras.backend.expand_dims(anchors, axis=0), (features_shape[0], 1, 1))
 
         return anchors
 

@@ -175,8 +175,8 @@ def create_callbacks(model, training_model, prediction_model, validation_generat
             evaluation = CocoEval(validation_generator, tensorboard=tensorboard_callback)
         else:
             evaluation = Evaluate(validation_generator, tensorboard=tensorboard_callback, weighted_average=args.weighted_average)
-        evaluation = RedirectModel(evaluation, prediction_model)
-        callbacks.append(evaluation)
+        # evaluation = RedirectModel(evaluation, prediction_model)    
+        # callbacks.append(evaluation)
 
     # save the model
     if args.snapshots:
@@ -192,7 +192,7 @@ def create_callbacks(model, training_model, prediction_model, validation_generat
             # monitor="mAP",
             # mode='max'
         )
-        checkpoint = RedirectModel(checkpoint, model)
+        # checkpoint = RedirectModel(checkpoint, model)
         callbacks.append(checkpoint)
 
     callbacks.append(keras.callbacks.ReduceLROnPlateau(

@@ -41,8 +41,10 @@ def focal(alpha=0.25, gamma=2.0, cutoff=0.5):
         Returns
             The focal loss of y_pred w.r.t. y_true.
         """
-        labels         = y_true[:, :, :-1]
-        anchor_state   = y_true[:, :, -1]  # -1 for ignore, 0 for background, 1 for object
+        # labels         = y_true[:, :, :-1]
+        # anchor_state   = y_true[:, :, -1]  # -1 for ignore, 0 for background, 1 for object
+        labels         = y_true[:, :, 5:6]
+        anchor_state   = y_true[:, :, 6]  # -1 for ignore, 0 for background, 1 for object
         classification = y_pred
 
         # filter out "ignore" anchors
@@ -91,8 +93,8 @@ def smooth_l1(sigma=3.0):
         """
         # separate target and state
         regression        = y_pred
-        regression_target = y_true[:, :, :-1]
-        anchor_state      = y_true[:, :, -1]
+        regression_target = y_true[:, :, :4]
+        anchor_state      = y_true[:, :, 4]
 
         # filter out "ignore" anchors
         indices           = backend.where(keras.backend.equal(anchor_state, 1))
